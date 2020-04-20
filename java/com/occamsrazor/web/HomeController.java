@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 	@GetMapping("/")
 	public String hello() {
-		return "login.html";
+		return "index.html";
 	}
 
 }

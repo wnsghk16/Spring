@@ -9,5 +9,4 @@ public class OccamsrazorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OccamsrazorApplication.class, args);
 	}
-
 }

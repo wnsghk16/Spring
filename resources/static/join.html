@@ -78,20 +78,26 @@ footer {
 <section>
   <nav>
     <ul>
-      <li><a id="a-first" href="join.html">Join</a></li>
-      <li><a id="a-second" href="#">Login</a></li>
+      <li><a id="a-first" href="#">Join</a></li>
+      <li><a id="a-second" href="index.html">Login</a></li>
       <li><a id="a-third" href="#">...</a></li>
     </ul>
   </nav>
   
   <article>
-    <form action="#">
+    <form action="#">    
+     <label>NAME </label> <br>
+     <input id="name" type = "text"> <br>
      <label>ID </label> <br>
-     <input type="text"> <br>
+     <input id="userid" type="text"> <br>
      <label>PASSWORD </label> <br>
-     <input type="text"> <br>
-     <input id="a-login" type="button" value="로그인">
-     <input id="a-cancle" type="button" value="취소"> 
+     <input id="passwd" type="text"> <br>
+     <label>SSN </label> <br>
+     <input id="ssn" type="text"> <br>
+     <label>ADDRESS </label> <br>
+     <input id="addr" type ="text"> <br> <br>
+     <input id="join-button" type="button" value="회원가입">
+     <input id="cancle-button" type="button" value="취소"> 
     </form>
   </article>
 </section>
@@ -108,12 +114,33 @@ footer {
 	$('#a-third').click(function(){
 		
 	})
-	$('#a-login').click(function(){
-		
+	$('#join-button').click(function(){
+		let member = {name:$('#name').val(),
+		userid:$('#userid').val(),
+		passwd:$('#passwd').val(),
+		ssn:$('#ssn').val(),
+		addr:$('#addr').val()} 
+		alert('입력된 주민번호 = '+member.ssn) // getset없음 대신 보안포기 속도빠름
+		//라이브러리로 셋팅
+		$.ajax({
+			url: '/join',
+			type: 'post', //연결(맵핑)
+			data: JSON.stringify(member), //스트링으로 다 바꿔라
+			dataType: 'json',
+			contentType: 'application/json', //application은 java를 말함
+			success: function(returnMember){
+				alert(returnMember.name+'님 회원가입 성공')
+			},
+			error: function(){
+				alert('회원가입 실패')
+			}
+			
+		})
+		//컨트롤러로 보내기
 	})
-	$('#a-cancle').click(function(){
-		
-	})
+	$('#cancle-button').click(function(){
+		alert('취소')
+ 	})
 	</script>
 </body>
 </html>

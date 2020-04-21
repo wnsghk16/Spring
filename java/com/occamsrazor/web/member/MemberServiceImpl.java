@@ -1,5 +1,8 @@
 package com.occamsrazor.web.member;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class MemberServiceImpl implements MemberService{
 	private Member[] members;
 	int count;
@@ -34,6 +37,18 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int count() {		
 		return count;
+	}
+	@Override
+	public boolean login(Member member) {
+		boolean ok = false;
+		for(int i=0; i<count; i++) {
+			if(member.userid.equals(members[i].getUserid())
+					&& member.getPasswd().equals(members[i].getPasswd())) {
+				ok = true;
+				break;
+			}
+		}
+		return ok;
 	}
 	@Override
 	public void update(Member member) {

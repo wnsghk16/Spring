@@ -2,6 +2,8 @@ package com.occamsrazor.web.grade;
 
 import org.springframework.stereotype.Service;
 
+import com.occamsrazor.web.util.Credit;
+
 @Service
 public class GradeServiceImpl implements GradeService {
 	private Grade[] grades;
@@ -12,7 +14,7 @@ public class GradeServiceImpl implements GradeService {
 	}
 	@Override
 	public void add(Grade grade) {
-		grades[count] = new Grade();
+		grades[count] = grade;
 		count++;
 	}
 	@Override
@@ -37,38 +39,53 @@ public class GradeServiceImpl implements GradeService {
 	}
 	@Override
 	public int total(Grade grade) {
-		return Integer.parseInt(grade.getKorean()+grade.getMath()+grade.getEnglish()+grade.getJava());
+		int result=0;
+		for(int i=0; i<count; i++) {
+			if(grade.getUserid().equals(grades[i].getUserid())) {	
+				result = Integer.parseInt(grades[i].getKorean())
+						+ Integer.parseInt(grades[i].getMath())
+						+ Integer.parseInt(grades[i].getEnglish())
+						+ Integer.parseInt(grades[i].getJava());
+				break;
+			}
+		}		
+		return result;
 	}
+	
 	@Override
 	public int avg(Grade grade) {
-		return total(grade)/3;
+		int result=0;
+		for(int i=0; i<count; i++) {
+			if(grade.getUserid().equals(grades[i].getUserid())) {
+				result = total(grades[i])/4;
+				break;
+			}
+		}
+		return result;
 	}
 	@Override
-	public String record(Grade grade) {
-		String result = "";
-		int avg = avg(grade)/10;
-		
+	public Credit record(Grade grade) {
+		int avg = 0;		
+		for(int i=0; i<count; i++) {
+			if(grade.getUserid().equals(grades[i].getUserid())) {
+				avg = avg(grades[i])/10;
+				break;
+			}
+		}		
 		switch(avg) {
 			case 9 : 
-				result = "A";
-				break;
+				return Credit.A;
 			case 8 : 
-				result = "B";
-				break;
+				return Credit.B;
 			case 7 : 
-				result = "C";
-				break;
+				return Credit.C;
 			case 6 : 
-				result = "D";
-				break;
+				return Credit.D;
 			case 5 : 
-				result = "E";
-				break;
+				return Credit.E;
 			default : 
-				result = "F";
-				break;			
+				return Credit.F;		
 		}
-		return result;	
 	}
 	@Override
 	public void update(Grade grade) {

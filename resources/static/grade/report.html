@@ -84,17 +84,12 @@ footer {
   </nav>
   
   <article>
-    <form action="#">         
+    <form action="#">
      <label>ID </label> <br>
-     <input id="userid" type="text"> <br>
-     <label>KOREAN </label> <br>
-     <input id="korean" type="text"> <br>
-     <label>MATH </label> <br>
-     <input id="math" type="text"> <br>
-     <label>ENGLISH </label> <br>
-     <input id="english" type="text"> <br>
-     <label>JAVA </label> <br>
-     <input id="java" type ="text"> <br> <br>
+     <input id="userid" type="text"> <br><br>
+     <input id="grade-button" type="button" value="학점확인"> <br><br>
+     <input id="total-button" type="button" value="총점확인"> <br><br>
+     <input id="avg-button" type="button" value="평균확인"> <br><br>
      <input id="register-button" type="button" value="점수등록">
     </form>
   </article>
@@ -103,7 +98,61 @@ footer {
   <p>Footer</p>
 </footer>
 	<script type="text/javascript">
-	
+	$('#grade-button').click(function(){
+		$.ajax({
+			url:'/grade/record',
+			type:'post',
+			data: JSON.stringify({
+				userid:$('#userid').val()
+			}),
+			dataType:'json',
+			contentType:'application/json',
+			success: function(message){
+				alert("학점 : "+message)
+			},
+			error: function(){
+				alert('Networking Error')
+			}
+		})
+	})
+	$('#total-button').click(function(){
+		$.ajax({
+			url:'/grade/total',
+			type:'post',
+			data: JSON.stringify({
+				userid:$('#userid').val()
+			}),
+			dataType:'json',
+			contentType:'application/json',
+			success: function(message){
+				alert("총점 : "+message)
+			},
+			error: function(){
+				alert('Networking Error')
+			}
+		})
+	})
+	$('#avg-button').click(function(){
+		$.ajax({
+			url:'/grade/avg',
+			type:'post',
+			data: JSON.stringify({
+				userid:$('#userid').val()
+			}),
+			dataType:'json',
+			contentType:'application/json',
+			success: function(message){
+				alert("평균 : "+message)
+			},
+			error: function(){
+				alert('Networking Error')
+			}
+		})
+	})
+	$('#register-button').click(function(){
+		location.href="register.html"
+	})
+		
 	</script>
 </body>
 </html>

@@ -119,10 +119,11 @@ footer {
 				contentType: 'application/json',
 				success: function(message){
 					if(message === 'SUCCESS'){
-						location.href="report.html"
+						alert('입력에 성공하셨습니다.')
+						location.href="register.html"
 					}else{
 						 alert('다시입력해주세요')
-						  location.href="register.html"
+						 location.href="register.html"
 					}
 					
 				},
@@ -130,6 +131,9 @@ footer {
 					alert('Networking Error')
 				}  
 		  })
+	  })
+	  $('#show-result').click(function(){
+		  location.href="report.html"
 	  })
 	  </script>
 </body>

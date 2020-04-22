@@ -21,13 +21,21 @@ public class GradeController {
 		gradeService.add(grade);
 		return (gradeService.count() == (current+1))?Messenger.SUCCESS:Messenger.FAIL;
 	}
-	
-	@PostMapping("/report")
-	public Credit report(@RequestBody Grade grade) {
-		
-		return null;
+	@PostMapping("/record")
+	public Credit record(@RequestBody Grade grade) {	
+		return gradeService.record(grade);
 	}
-
+	
+	@PostMapping("/total")
+	public int total(@RequestBody Grade grade) {	
+		return gradeService.total(grade);
+	}
+	
+	@PostMapping("/avg")
+	public int avg(@RequestBody Grade grade) {	
+		return gradeService.avg(grade);
+	}
+	
 	@GetMapping("/list")
 	public Grade[] list(@RequestBody Grade grade) {
 		Grade[] result = new Grade[5];

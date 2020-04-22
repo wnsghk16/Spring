@@ -22,15 +22,46 @@ public class GradeServiceImpl implements GradeService {
 		return grades;
 	}
 	@Override
-	public Grade detail(String userid) {
-		Grade result = null;
+	public Credit detail(String userid) {
+		Credit credit = null;
+		switch(avg(userid)/10) {
+		case 10: case 9 : 
+			credit = Credit.A;
+			break;
+		case 8 : 
+			credit = Credit.B;
+			break;
+		case 7 : 
+			credit = Credit.C;
+			break;
+		case 6 : 
+			credit = Credit.D;
+			break;
+		case 5 : 
+			credit = Credit.E;
+			break;
+		default : 
+			credit = Credit.F;	
+			break;
+		}
+		return credit;
+	}
+	@Override
+	public int avg(String userid) {
+		return total(userid)/4;
+	}
+	@Override
+	public int total(String userid) {
+		int result=0;
 		for(int i=0; i<count; i++) {
-			if(userid.equals(grades[i].getUserid())) {
-				result = new Grade();
-				result = grades[i];
+			if(userid.equals(grades[i].getUserid())) {	
+				result = Integer.parseInt(grades[i].getKorean())
+						+ Integer.parseInt(grades[i].getMath())
+						+ Integer.parseInt(grades[i].getEnglish())
+						+ Integer.parseInt(grades[i].getJava());
 				break;
 			}
-		}
+		}	
 		return result;
 	}
 	@Override

@@ -71,7 +71,7 @@ footer {
 </head>
 <body>
 <header>
-  <h2> 로그인 </h2>
+  <h2> 로또 구매 </h2>
 </header>
 
 <section>
@@ -83,76 +83,21 @@ footer {
   </nav>
   
   <article>
-    <form action="#">
+    <form action="#">         
      <label>ID </label> <br>
-     <input id="userid" type="text"> <br>
-     <label>PASSWORD </label> <br>
-     <input id="passwd" type="text"> <br>
-     <input id="login-button" type="button" value="로그인">
-     <input id="cancle-button" type="button" value="취소"> 
+     <input id="userid" type="text"> <br>   
+     <label>로또 번호 입력(,로 분리해주세요)</label> <br>
+     <input id="lotto" type="text"> <br>
+     <input id="buy-button" type="button" value="로또구매">
+     <input id="result-button" type="button" value="당첨결과">    
     </form>
+    <div id="result"></div>
   </article>
 </section>
 <footer>
   <p>Footer</p>
 </footer>
-	<script>
-	$('#join_a')
-		.css('cursor','pointer')
-		.click(e=>{
-			e.preventDefault()
-			location.href="member/join.html"
-	})
-	$('#login_a')
-		.css('cursor','pointer')
-		.click(e=>{
-			e.preventDefault()
-			location.href="index.html"
-	})
-	$('#login-button').click(e=>{
-		e.preventDefault()
-		
-		$.ajax({
-			url:'/member/login',
-			type: 'post', //예외로 보안이 필요한거는 post로함(get이 아니고)
-			data: JSON.stringify(
-					{userid:$('#userid').val(),
-					passwd:$('#passwd').val()}),
-			contentType : 'application/json',
-			dataType:'json',
-			success: d=>{	
-				if(d === "SUCCESS"){
-					location.href = "grade/register.html"
-				}else{
-					alert("다시 로그인 해주세요")
-					location.href = "index.html"
-				}
-				
-			},
-			error: (req,x,err)=>{
-				alert(req.status + "\n" + req.responseText + "\n" + err)
-			}
-		})
-	})
-	$('#cancle-button').click(e=>{
-		e.preventDefault()
-		
-		$.ajax({
-			url:'/member/delete',
-			type:'delete',
-			data:JSON.stringify(
-					{userid:$('#userid').val(),
-					passwd:$('#passwd').val()}),
-			dataType:'json',
-			contentType:'application/json',
-			success: d=>{
-				
-			},
-			error: (req,x,err)=>{
-				alert(req.status + "\n" + req.responseText + "\n" + err)
-			}		
-		})
-	})
-	</script>
+	<script>  
+	  </script>
 </body>
 </html>

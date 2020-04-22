@@ -77,9 +77,8 @@ footer {
 <section>
   <nav>
     <ul>
-      <li><a id="a-first" href="#">Join</a></li>
-      <li><a id="a-second" href="../index.html">Login</a></li>
-      <li><a id="a-third" href="#">...</a></li>
+      <li><a id="join_a">Join</a></li>
+      <li><a id="login_a">Login</a></li>
     </ul>
   </nav>
   
@@ -92,64 +91,77 @@ footer {
      <input id="avg-button" type="button" value="평균확인"> <br><br>
      <input id="register-button" type="button" value="점수등록">
     </form>
+    <div id="result"></div>
   </article>
 </section>
 <footer>
   <p>Footer</p>
 </footer>
-	<script type="text/javascript">
-	$('#grade-button').click(function(){
+	<script>
+	$('#join_a')
+		.css('cursor','pointer')
+		.click(e=>{
+			e.preventDefault()
+			location.href="join.html"
+	})
+	$('#login_a')
+		.css('cursor','pointer')
+		.click(e=>{
+			e.preventDefault()
+			location.href="../index.html"
+	})
+	$('#grade-button').click(e=>{
+		e.preventDefault()
+		$('#result').html('')			
 		$.ajax({
-			url:'/grade/record',
-			type:'post',
-			data: JSON.stringify({
-				userid:$('#userid').val()
-			}),
+				url:'/grade/report/'+$('#userid').val(),
+				type:'get',
+				//data:{}는 암호화된 데이터 보낼때 사용
+				dataType:'json',
+				contentType:'application/json',
+				success: d=>{
+					$('#result').html('<h3>학점:'+d+'</h3>')
+				},
+				error: (req,x,err)=>{
+					alert(req.status + "\n" + req.responseText + "\n" + err)
+				}
+			})				
+	})
+	$('#total-button').click(e=>{
+		e.preventDefault()
+		$('#result').html('')
+		$.ajax({
+			url:'/grade/total/'+$('#userid').val(),
+			type:'get',
+			//data:{}는 암호화된 데이터 보낼때 사용
 			dataType:'json',
 			contentType:'application/json',
-			success: function(message){
-				alert("학점 : "+message)
+			success: d=>{
+				$('#result').html('<h3>총점:'+d+'</h3>')
 			},
-			error: function(){
-				alert('Networking Error')
+			error: (req,x,err)=>{
+				alert(req.status + "\n" + req.responseText + "\n" + err)
 			}
 		})
 	})
-	$('#total-button').click(function(){
+	$('#avg-button').click(e=>{
+		e.preventDefault()
+		$('#result').html('')
 		$.ajax({
-			url:'/grade/total',
-			type:'post',
-			data: JSON.stringify({
-				userid:$('#userid').val()
-			}),
+			url:'/grade/avg/'+$('#userid').val(),
+			type:'get',
 			dataType:'json',
 			contentType:'application/json',
-			success: function(message){
-				alert("총점 : "+message)
+			success: d=>{
+				$('#result').html('<h3>평균:'+d+'</h3>')
 			},
-			error: function(){
-				alert('Networking Error')
+			error: (req,x,err)=>{
+				alert(req.status + "\n" + req.responseText + "\n" + err)
 			}
 		})
 	})
-	$('#avg-button').click(function(){
-		$.ajax({
-			url:'/grade/avg',
-			type:'post',
-			data: JSON.stringify({
-				userid:$('#userid').val()
-			}),
-			dataType:'json',
-			contentType:'application/json',
-			success: function(message){
-				alert("평균 : "+message)
-			},
-			error: function(){
-				alert('Networking Error')
-			}
-		})
-	})
-	$('#register-button').click(function(){
+	$('#register-button').click(e=>{
+		e.preventDefault()
 		location.href="register.html"
 	})
 		

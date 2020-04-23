@@ -71,30 +71,23 @@ footer {
 </head>
 <body>
 <header>
-  <h2> 관리자 등록 </h2>
+  <h2>사용자 로그인 </h2>
 </header>
 
 <section>
   <nav>
     <ul>
-      <li><a id="join_a">관리자 등록</a></li>
-      <li><a id="login_a">관리자 접속</a></li>
+    	<li><a id="home_a">홈으로</a></li>
     </ul>
   </nav>
   
   <article>
-    <form action="#">    
-     <label>NAME </label> <br>
-     <input id="name" type = "text"> <br>
+    <form action="#">
      <label>ID </label> <br>
      <input id="userid" type="text"> <br>
      <label>PASSWORD </label> <br>
      <input id="passwd" type="text"> <br>
-     <label>SSN </label> <br>
-     <input id="ssn" type="text"> <br>
-     <label>ADDRESS </label> <br>
-     <input id="addr" type ="text"> <br> <br>
-     <input id="join-button" type="button" value="회원가입">
+     <input id="login-button" type="button" value="로그인">
      <input id="cancle-button" type="button" value="취소"> 
     </form>
   </article>
@@ -103,46 +96,35 @@ footer {
   <p>Footer</p>
 </footer>
 	<script>
-	$('#join_a')
-		.css('cursor','pointer')
-		.click(e=>{
-			e.preventDefault()
-			location.href="join.html"
-	})
-	$('#login_a')
-		.css('cursor','pointer')
+	$('#home_a')
+		.css('cusor','pointer')
 		.click(e=>{
 			e.preventDefault()
 			location.href="../index.html"
 	})
-	
-	$('#join-button').click(e=> {
+	$('#login-button').click(e=>{
 		e.preventDefault()
 		$.ajax({
-			url: '/member/join', //리소스에 접근(join)
-			type: 'post', //연결(맵핑)
-			data: JSON.stringify(
-					{name:$('#name').val(),
-					userid:$('#userid').val(),
-					passwd:$('#passwd').val(),
-					ssn:$('#ssn').val(),
-					addr:$('#addr').val()} ), //스트링으로 다 바꿔라
-			dataType: 'json',
-			contentType: 'application/json', //application은 java를 말함
-			success: d =>{
-				if(d === 'SUCCESS'){//string값 비교는 ===
-					location.href="../index.html" // BOM객체
+			url:'/user/login',
+			type:'post',
+			data:JSON.stringify({
+				userid:$('#userid').val(),
+				passwd:$('#passwd').val()
+			}),
+			dataType:'json',
+			contentType:'application/json',
+			success: d=>{
+				if(d.messenger === 'SUCCESS'){
+					location.href="mypage.html"					
 				}else{
-					location.href="join.html"
+					alert('잘못입력했습니다.')
+					location.href="signin.html"
 				}
-				
 			},
 			error: (req,x,err)=>{
-				alert(req.status + "\n" + req.responseText + "\n" + err)
+				alert(req.state+"\n"+req.reponseText+"\n"+err)
 			}
-			
 		})
-		//컨트롤러로 보내기
 	})
 	$('#cancle-button').click(e=>{
 		e.preventDefault();

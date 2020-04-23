@@ -3,8 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+  float: left;
+  width: 30%;
+  height: 300px; /* only for demonstration, should be removed */
+  background: #ccc;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  background-color: #f1f1f1;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
 </head>
 <body>
-	
+<header>
+  <h2> 당첨 결과 </h2>
+</header>
+
+<section>
+  <nav>
+    <ul>
+      <li><a id="home_a">홈으로</a></li>
+    </ul>
+  </nav>
+  
+  <article>
+    <form action="#">    
+     <input id="checknum-button" type="button" value="당첨번호확인">
+     <div id="lotto_num"></div>
+     <label>ID </label> <br>
+     <input id="userid" type="text"> <br>  
+     <input id="mynum-button" type="button" value="내번호확인"> <br>    
+     <input id="result-button" type="button" value="등수확인">    
+    </form>   
+    <div id="my_num"></div>
+    <div id="result"></div>
+  </article>
+</section>
+<footer>
+  <p>Footer</p>
+</footer>
+	<script>  
+		$('#home_a')
+			.css('cusor','pointer')
+			.click(e=>{
+				e.preventDefault()
+				location.href="../index.html"
+		})		
+		$('#checknum-button').click(e=>{
+			e.preventDefault()
+			$.ajax({
+				url:'/lotto/number/',
+				type:'get',
+				contentType:'application/json',
+				success: d=>{
+					$('#lotto_num').html('<h3>당첨번호:'+d+'</h3>')
+				},
+				error: (req,x,err)=>{
+					alert(req.status+"\n"+req.reponseText+"\n"+err)
+				}
+			})
+		})
+		$('#mynum-button').click(e=>{
+			e.preventDefault()
+			$.ajax({
+				url:'/lotto/mynumber/'+$('#userid').val(),
+				type:'get',
+				contentType:'application/json',
+				success: d=>{
+					$('#my_num').html('<h3>내번호:'+d+'</h3>')
+				},
+				error: (req,x,err)=>{
+					alert(req.status+"\n"+req.reponseText+"\n"+err)
+				}
+			})
+		})
+		$('#result-button').click(e=>{
+			e.preventDefault()
+			$.ajax({
+				url:'/lotto/rank/'+$('#userid').val(),
+				type:'get',
+				dataType:'json',
+				contentType:'application/json',
+				success: d=>{
+					$('#result').html('<h3>'+d+'</h3>')
+				},
+				error: (req,x,err)=>{
+					alert(req.status+"\n"+req.reponseText+"\n"+err)
+				}
+			})
+		})
+	</script>
 </body>
 </html>

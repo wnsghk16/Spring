@@ -77,8 +77,7 @@ footer {
 <section>
   <nav>
     <ul>
-      <li><a id="join_a">Join</a></li>
-      <li><a id="login_a">Login</a></li>
+      <li><a id="home_a">홈으로</a></li>
     </ul>
   </nav>
   
@@ -98,6 +97,39 @@ footer {
   <p>Footer</p>
 </footer>
 	<script>  
-	  </script>
+		$('#home_a')
+			.css('cusor','pointer')
+			.click(e=>{
+				e.preventDefault()
+				location.href="../index.html"
+		})
+		$('#buy-button').click(e=>{
+			e.preventDefault()
+			$.ajax({
+				url:'/lotto/buy',
+				type:'post',
+				data:JSON.stringify(
+						{userid:$('#userid').val(),
+							lotto:$('#lotto').val()}),
+				dataType:'json',
+				contentType:'application/json',
+				success: d=>{
+					if(d==='SUCCESS'){
+						alert("로또 구매를 완료했습니다.")
+					}else{
+						alert("잘못입력했습니다.")
+						location.href="buy.html"
+					}
+				},
+				error: (req,x,err)=>{
+					alert(req.status+"\n"+req.reponseText+"\n"+err)
+				}
+			})
+		})
+		$('#result-button').click(e=>{
+			e.preventDefault()
+			location.href="lotto.html"
+		})
+	</script>
 </body>
 </html>

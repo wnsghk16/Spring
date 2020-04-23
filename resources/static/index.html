@@ -71,14 +71,16 @@ footer {
 </head>
 <body>
 <header>
-  <h2> 로그인 </h2>
+  <h2> 관리자 접속 </h2>
 </header>
 
 <section>
   <nav>
     <ul>
-      <li><a id="join_a">Join</a></li>
-      <li><a id="login_a">Login</a></li>
+      <li><a id="join_a">관리자 등록</a></li>
+      <li><a id="login_a">관리자 접속</a></li>
+      <li><a id="signup_a">사용자 가입</a></li>
+      <li><a id="signin_a">사용자 로그인</a></li>
     </ul>
   </nav>
   
@@ -109,6 +111,18 @@ footer {
 			e.preventDefault()
 			location.href="index.html"
 	})
+	$('#signup_a')
+		.css('cusor','pointer')
+		.click(e=>{
+			e.preventDefault()
+			location.href="user/signup.html"
+	})
+	$('#signin_a')
+		.css('cursor','pointer')
+		.click(e=>{
+			e.preventDefault()
+			location.href="user/signin.html"
+	})
 	$('#login-button').click(e=>{
 		e.preventDefault()
 		
@@ -122,7 +136,7 @@ footer {
 			dataType:'json',
 			success: d=>{	
 				if(d === "SUCCESS"){
-					location.href = "grade/register.html"
+					location.href = "lotto/buy.html"
 				}else{
 					alert("다시 로그인 해주세요")
 					location.href = "index.html"

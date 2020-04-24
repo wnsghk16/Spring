@@ -117,6 +117,19 @@ footer {
 					alert(req.status+"\n"+req.reponseText+"\n"+err)
 				}
 			})
+			
+			$.ajax({
+				url:'/lotto/rank/'+$('#userid').val(),
+				type:'get',
+				dataType:'json',
+				contentType:'application/json',
+				success: d=>{
+					$('#result').html('<h3>'+d+'</h3>')
+				},
+				error: (req,x,err)=>{
+					alert(req.status+"\n"+req.reponseText+"\n"+err)
+				}
+			})
 		})
 		$('#mynum-button').click(e=>{
 			e.preventDefault()

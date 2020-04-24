@@ -35,5 +35,15 @@ public class UserServiceImpl implements UserService{
 	public User detail(String userid) {
 		return (User) map.get(userid); //다운캐스팅
 	}
+	@Override
+	public boolean update(User user) { //로그인한 상태에서 업데이트하는거라서 무조건 true
+		map.replace(user.getUserid(), user);
+		return true;
+	}
+	@Override
+	public boolean delete(String userid) { //로그인한 상태에서 삭제하는거라서 무조건 true
+		map.remove(userid);
+		return true;
+	}
 
 }

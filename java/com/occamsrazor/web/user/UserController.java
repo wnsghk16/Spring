@@ -66,4 +66,10 @@ public class UserController {
 		return (userService.delete(userid))?Messenger.SUCCESS:Messenger.FAIL;
 	}
 	
+	@GetMapping("/idcheck/{userid}")
+	public Messenger idCheck(@PathVariable String userid) {
+		return (userService.idCheck(userid))?Messenger.SUCCESS:Messenger.FAIL;
+	}
+	
+	
 }

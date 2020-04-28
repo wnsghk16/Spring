@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class FileTest {
+	/*
 	public final static String FILE_PATH = "C:\\Users\\bit22\\spring-workspace\\occamsrazor\\src\\main\\resources\\static\\member\\";
 	public static void main(String[] args) {
 		try {
@@ -39,5 +40,5 @@ public class FileTest {
 			
 		}catch(Exception e){
 		}
-	}
+	}*/
 }

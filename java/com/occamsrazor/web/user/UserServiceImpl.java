@@ -121,6 +121,24 @@ public class UserServiceImpl implements UserService{
 		}
 		return list;
 	}
+	@Override
+	public boolean idCheck(String userid) {	
+		boolean ok=true;
+		List<User> list = readFile();
+		for(int i=0; i<list.size(); i++) {
+			if(userid.equals(list.get(i).getUserid())) {
+				ok = false;
+				break;
+			}
+		}
+		/*
+		 User id = (User) map.get(userid);
+		 if(userid.equals(id.getUserid()){
+		 	ok = false
+		 }
+		 */
+		return ok;
+	}
 	
 
 }

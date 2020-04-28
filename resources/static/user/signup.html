@@ -86,7 +86,8 @@ footer {
      <label>NAME </label> <br>
      <input id="name" type = "text"> <br>
      <label>ID </label> <br>
-     <input id="userid" type="text"> <br>
+     <input id="userid" type="text">
+     <input id="idcheck_button" type="button" value="아이디중복확인"> <br>
      <label>PASSWORD </label> <br>
      <input id="passwd" type="text"> <br>
      <label>SSN </label> <br>
@@ -133,6 +134,14 @@ footer {
 			error: (req,x,err)=>{
 				alert(req.status+"\n"+req.reponseText+"\n"+err)
 			}
+		})
+	})
+	$('#idcheck_button').click(e=>{
+		e.preventDefault()
+		
+		$.getJSON('/user/idcheck/'+$('#userid').val(),d=>{
+			let message = (d==='SUCCESS')?'사용가능한 아이디입니다.':'이미 사용중인 아이디입니다. 다시 입력해주세요.'
+			alert(message)
 		})
 	})
 	$('#cancle-button').click(e=>{
